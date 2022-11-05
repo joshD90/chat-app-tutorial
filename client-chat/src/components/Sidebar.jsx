@@ -43,7 +43,11 @@ function Sidebar({ id }) {
         </Button>
       </Tab.Container>
       <Modal show={modalOpen} onHide={closeModal}>
-        {conversationsOpen ? <NewConversationModal /> : <NewContactModal />}
+        {conversationsOpen ? (
+          <NewConversationModal closeModal={closeModal} />
+        ) : (
+          <NewContactModal closeModal={closeModal} />
+        )}
       </Modal>
     </div>
   );

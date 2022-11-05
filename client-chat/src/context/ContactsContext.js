@@ -1,6 +1,11 @@
 import React, { useContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-const ContactContext = React.createContext();
+const ContactsContext = React.createContext();
+
+export const useContacts = () => {
+  return useContext(ContactsContext);
+};
 
 export function ContactsProvider({ children }) {
   const [contacts, setContacts] = useLocalStorage("contacts", []);
@@ -8,6 +13,7 @@ export function ContactsProvider({ children }) {
   function createContact(id, name) {
     setContacts((prevContacts) => [...prevContacts, { id, name }]);
   }
+
   function deleteContact(id) {
     setContacts((prevContacts) =>
       prevContacts.filter((contact) => contact.id !== id)
@@ -15,8 +21,10 @@ export function ContactsProvider({ children }) {
   }
 
   return (
-    <ContactContext.Provider value={(contacts, createContact, deleteContact)}>
+    <ContactsContext.Provider
+      value={{ contacts, createContact, deleteContact }}
+    >
       {children}
-    </ContactContext.Provider>
+    </ContactsContext.Provider>
   );
 }

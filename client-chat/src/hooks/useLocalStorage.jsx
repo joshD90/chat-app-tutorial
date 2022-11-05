@@ -8,8 +8,12 @@ function useLocalStorage(key, initialValue) {
   //use the functional part of use state to avoid having to parse every time
   const [value, setValue] = useState(() => {
     const jsonValue = localStorage.getItem(prefixedKey);
+    console.log(jsonValue);
     //we parse if there is something already there
-    if (jsonValue != null) return JSON.parse(jsonValue);
+    if (jsonValue != "null" && jsonValue != "undefined" && jsonValue) {
+      console.log("jsonvalue is not equal to null");
+      return JSON.parse(jsonValue);
+    }
     if (typeof initialValue === "function") {
       //if not return the initial value unchanged
       return initialValue();
